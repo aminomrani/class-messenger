@@ -22,23 +22,28 @@ $time = jdate('Y-m-d H:i:s');
 
 if(in_array($step_type,['gotroom','sendpm','login','register','getinfo']) == false){
     #make error message code : 502 for  false step_type
-    print json_encode(array('Error_code' => '502'));
+    echo json_encode(array('Error_code' => '502'));
     exit();
 }
-
 elseif($username == null or $password == null) {
     #make error message code  : 501 for null parametr
-    print json_encode(array('Error_code' =>"501"));
+    echo json_encode(array('Error_code' =>"501"));
     exit;
 
 }
-elseif ($step_type == 'login') {
+if ($step_type == 'login') {
     if ($database->select('users',['username'],[$username])[0] !== null){
         if($database->select('login',['logintime'],[$username])[0] == null ){
-            $database->insert('users',['username'=>$username,'logintime'=>$time]);
+            $database->insert('users',['username'=>$username,'login_warn' => 0,'logintime'=>$time]);
         }else{
-            $database->update('login',['logintime'=>$time],[$username]);
+            $database->update('login',['logintime'=>$time,'login_warn' => 0],[$username]);
         }
+        echo json_encode(array('login'=>true , 'server_time'=>$time));
+
+    }else{
+        $database->update('login',['logintime'=>$time,'login_warn' => +1],[$username]);
+
+        echo json_encode(array('login'=>false ,'login_warn'=>$database->select('login',['login_warn'],['username']), ''=>$time));
     }
     
 }
