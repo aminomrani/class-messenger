@@ -16,7 +16,7 @@ $database = new Medoo([
 ]);
 
 
-if($_GET !== null) {
+if(isset($_GET)) {
     if($_GET['username'] == null){
         $username = null ;
     }else {
@@ -50,7 +50,6 @@ if($_GET !== null) {
     $time = jdate('Y-m-d H:i:s');
 }
 
-
 if(in_array($step_type,['gotroom','sendpm','login','register','getinfo']) == false){
     #make error message code : 502 for  false step_type
     echo json_encode(array('Error_code' => '502'));
@@ -80,7 +79,19 @@ if ($step_type == 'login') {
 }
 
 if($step_type == 'sendpm'){
-    if($_GET['RoomID'] == null){
-        
+    if($RoomID == null){
+        if($pm !== null){
+            $database->insert('pm',['to_id'=>'all','text_pm'=>$pm]);
+            echo json_encode(array('ans'=>200));
+        }else{
+            echo json_encode(array('ans'=>['Error'=>'501']));
+        }
+    }else{ 
+        if($pm !== null){
+            $database->insert('pm',['to_id'=>$RoomID,'text_pm'=>$pm]);
+            echo json_encode(array('ans'=>200));
+        }else{
+            echo json_encode(array('ans'=>['Error'=>'501']));
+        }
     }
 }
