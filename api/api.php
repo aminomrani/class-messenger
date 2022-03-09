@@ -16,7 +16,7 @@ $database = new Medoo([
 ]);
 
 
-if($_get !== null) {
+if($_GET !== null) {
     if($_GET['username'] == null){
         $username = null ;
     }else {
