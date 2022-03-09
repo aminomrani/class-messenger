@@ -1,7 +1,7 @@
 <?php
 #
 require_once 'config.php';
-require_once 'lib/medoo.php';
+require_once 'lib/Medoo.php';
 
 use database ; 
 $config = new database();
