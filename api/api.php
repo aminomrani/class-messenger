@@ -17,12 +17,36 @@ $database = new Medoo([
 
 
 if($_get !== null) {
-    $username = $_GET['username'];
-    $password = $_GET['password'];
-    $step_type = $_GET['type'];
-    $roomid = $_GET['roomid'];
-    $pm = $_GET['pm'];
-    $TO_ID = $_GET['TOID'];
+    if($_GET['username'] == null){
+        $username = null ;
+    }else {
+        $username = $_GET['username'];
+    }
+    if($_GET['password'] == null){
+        $password = null ;
+    }else {
+        $password = $_GET['password'];
+    }
+    if($_GET['type'] == null){
+        $step_type = null;
+    }else {
+        $step_type = $_GET['type'];
+    }
+    if($_GET['RoomID'] == null){
+        $RoomID = null;
+    }else{
+        $RoomID = $_GET['RoomID'];
+    }
+    if($_GET['Pm'] == null){
+        $pm = null;
+    }else{
+        $pm = $_GET['Pm'];
+    }
+    if($_GET['TO_ID'] == null){
+        $TO_ID = null;
+    }else{
+        $TO_ID = $_GET['TO_ID'];
+    }
     $time = jdate('Y-m-d H:i:s');
 }
 
