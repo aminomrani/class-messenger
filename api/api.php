@@ -15,10 +15,17 @@ $database = new Medoo([
     'password' => $config->config_data['password'],
 ]);
 
-$username = $_GET['username'];
-$password = $_GET['password'];
-$step_type = $_GET['type'];
-$time = jdate('Y-m-d H:i:s');
+
+if($_get !== null) {
+    $username = $_GET['username'];
+    $password = $_GET['password'];
+    $step_type = $_GET['type'];
+    $roomid = $_GET['roomid'];
+    $pm = $_GET['pm'];
+    $TO_ID = $_GET['TOID'];
+    $time = jdate('Y-m-d H:i:s');
+}
+
 
 if(in_array($step_type,['gotroom','sendpm','login','register','getinfo']) == false){
     #make error message code : 502 for  false step_type
@@ -46,4 +53,10 @@ if ($step_type == 'login') {
         echo json_encode(array('login'=>false ,'login_warn'=>$database->select('login',['login_warn'],['username']), ''=>$time));
     }
     
+}
+
+if($step_type == 'sendpm'){
+    if($_GET['RoomID'] == null){
+        
+    }
 }
