@@ -23,7 +23,7 @@ class classroom(requests):
     def login(self):
         login_to_site = requests.get(self.api , auth =(self.username,self.password))
         if login_to_site.status_code == 200 : #return 200
-            print ("Welcome to secret class")
+            print ("Welcome to secret class - devlop by pgu students")
             f = open("username.txt","w")
             f.write(self.username)
             f.close()
