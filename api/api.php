@@ -56,10 +56,10 @@ if(in_array($step_type,['gotroom','sendpm','login','register','getinfo']) == fal
     exit();
 }
 
-elseif($username == null or $password == null) {
+if($username == null or $password == null) {
     #make error message code  : 501 for null parametr
     echo json_encode(array('Error_code' =>"501"));
-    exit;
+    exit();
 
 }
 

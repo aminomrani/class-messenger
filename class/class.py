@@ -2,9 +2,10 @@ from numpy import array
 import requests
 
 class classroom(requests):
-    def __init__ (self,username,password,api):
+    def __init__ (self,username,password):
         self.username = username
         self.password = password
+        self.nikename = nikename
         self.api = 'http://localhost/'
 
     def log(data):
@@ -35,6 +36,7 @@ class classroom(requests):
             f1.close()
         else: 
             return 'server error : server is not responding'
+            
     def register(self) : 
         login_to_site = requests.get(self.api , params = {'type':'register','username':self.username,'password' : self.password })
         if login_to_site.status_code == 200 : 
