@@ -55,25 +55,28 @@ if(in_array($step_type,['gotroom','sendpm','login','register','getinfo']) == fal
     echo json_encode(array('Error_code' => '502'));
     exit();
 }
+
 elseif($username == null or $password == null) {
     #make error message code  : 501 for null parametr
     echo json_encode(array('Error_code' =>"501"));
     exit;
 
 }
+
+
 if ($step_type == 'login') {
     if ($database->select('users',['username'],[$username])[0] !== null){
         if($database->select('login',['logintime'],[$username])[0] == null ){
             $database->insert('users',['username'=>$username,'login_warn' => 0,'logintime'=>$time]);
         }else{
-            $database->update('login',['logintime'=>$time,'login_warn' => 0],[$username]);
+            $database->update('login',['logintime'=>$time,'login_warn' => 0],['username'=>$username]);
         }
         echo json_encode(array('login'=>true , 'server_time'=>$time));
 
     }else{
-        $database->update('login',['logintime'=>$time,'login_warn' => +1],[$username]);
+        $database->update('login',['logintime'=>$time,'login_warn' => +1],['username'=>$username]);
 
-        echo json_encode(array('login'=>false ,'login_warn'=>$database->select('login',['login_warn'],['username']), ''=>$time));
+        echo json_encode(array('login'=>false ,'login_warn'=>$database->select('login',['login_warn'],['username'=>$username])[0], 'server_time'=>$time));
     }
     
 }
@@ -94,4 +97,16 @@ if($step_type == 'sendpm'){
             echo json_encode(array('ans'=>['Error'=>'501']));
         }
     }
+}
+
+if($step_type == 'register'){
+    if($database->select('users',['username'],['username'=>$username])[0] ==null){
+        $database->insert('uses',['username'=>$username,'password'=>$password]);
+        $database->insert('login',['username'=>$username,'logintime'=>$time]);
+        print json_encode(array('ans'=>'user was created successfully', 'username'=>$username,'password'=>$password));
+
+    }else{
+        print json_encode(array('ans'=>'user was not created successfully', 'username'=>$username));
+    }
+
 }
