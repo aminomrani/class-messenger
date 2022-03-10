@@ -6,7 +6,7 @@
 
 class  database {
     public  $config_data = [
-        'username' => '',
+        'username' => 'totansho_api',
         'password' => '',
         'servername' => 'localhost',
         'databasename' => ''
