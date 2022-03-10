@@ -101,7 +101,7 @@ if($step_type == 'sendpm'){
 
 if($step_type == 'register'){
     if($database->select('users',['username'],['username'=>$username])[0] ==null){
-        $database->insert('uses',['username'=>$username,'password'=>$password]);
+        $database->insert('users',['username'=>$username,'password'=>$password]);
         $database->insert('login',['username'=>$username,'logintime'=>$time]);
         print json_encode(array('ans'=>'user was created successfully', 'username'=>$username,'password'=>$password));
 
